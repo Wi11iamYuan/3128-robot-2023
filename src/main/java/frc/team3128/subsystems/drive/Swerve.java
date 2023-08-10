@@ -1,4 +1,4 @@
-package frc.team3128.subsystems;
+package frc.team3128.subsystems.drive;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
@@ -25,6 +25,8 @@ import static frc.team3128.Constants.VisionConstants.*;
 
 import java.io.FileWriter;
 
+import org.littletonrobotics.junction.Logger;
+
 public class Swerve extends SubsystemBase {
 
     private volatile FileWriter txtFile;
@@ -43,6 +45,9 @@ public class Swerve extends SubsystemBase {
 
     private Field2d field;
 
+    private SwerveIO swerveIO;
+    private SwerveIOInputsAutoLogged swerveIOInputs = new SwerveIOInputsAutoLogged();
+
     public static synchronized Swerve getInstance() {
         if (instance == null) {
             instance = new Swerve();
@@ -51,6 +56,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public Swerve() {
+        swerveIO = new SwerveIO();
         gyro = new WPI_Pigeon2(pigeonID);
         gyro.configFactoryDefault();
         //zeroGyro();
@@ -163,6 +169,9 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic() {
+        swerveIO.updateInputs(swerveIOInputs);
+        Logger.getInstance().processInputs("Drive", swerveIOInputs);
+        
         // error = false;
         odometry.update(getGyroRotation2d(), getPositions());
         // if(error) {
@@ -243,4 +252,5 @@ public class Swerve extends SubsystemBase {
         return (Math.abs(measured.speedMetersPerSecond - theoretical.speedMetersPerSecond)/ theoretical.speedMetersPerSecond) < 0.05 
         && (Math.abs(measured.angle.getDegrees() - theoretical.angle.getDegrees())/ theoretical.angle.getDegrees()) < 0.05;
       }
+      
 }

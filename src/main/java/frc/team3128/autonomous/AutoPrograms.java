@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.team3128.Constants.SwerveConstants;
 import frc.team3128.common.narwhaldashboard.NarwhalDashboard;
 import frc.team3128.common.utility.Log;
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.drive.Swerve;
 
 /**
  * Class to store information about autonomous routines.

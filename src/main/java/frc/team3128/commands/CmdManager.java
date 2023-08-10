@@ -19,7 +19,7 @@ import frc.team3128.common.narwhaldashboard.NarwhalDashboard;
 import frc.team3128.subsystems.Intake;
 import frc.team3128.subsystems.Led;
 import frc.team3128.subsystems.Manipulator;
-import frc.team3128.subsystems.Pivot;
+import frc.team3128.subsystems.pivot.Pivot;
 import frc.team3128.subsystems.Telescope;
 import frc.team3128.subsystems.Vision;
 import frc.team3128.subsystems.Intake.IntakeState;

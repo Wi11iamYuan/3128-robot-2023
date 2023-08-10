@@ -9,7 +9,7 @@ import static frc.team3128.Constants.VisionConstants.*;
 
 import static frc.team3128.Constants.SwerveConstants.*;
 
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.drive.Swerve;
 import frc.team3128.subsystems.Vision;
 
 public class CmdTargetPursuit extends CommandBase {

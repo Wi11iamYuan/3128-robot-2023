@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.drive.Swerve;
 import static frc.team3128.Constants.SwerveConstants.*;
 
 public class CmdSwerveDrive extends CommandBase {

@@ -5,6 +5,7 @@
 package frc.team3128;
 
 import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
 
 // import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.team3128.autonomous.AutoPrograms;
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.drive.Swerve;
 import frc.team3128.subsystems.Telescope;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -38,7 +39,15 @@ public class Robot extends LoggedRobot {
 
     @Override
     public void robotInit(){
-        LiveWindow.disableAllTelemetry();
+        Logger logger = Logger.getInstance();
+
+        logger.recordMetadata("ProjectName", "TEST1");
+        logger.recordMetadata("BuildDate", String.valueOf(logger.getRealTimestamp()));
+
+        logger.addDataReceiver(null);
+
+        logger.start();
+        //LiveWindow.disableAllTelemetry();
         // Pivot.getInstance().offset = Pivot.getInstance().getAngle();
     }
 
@@ -78,6 +87,7 @@ public class Robot extends LoggedRobot {
     public void teleopPeriodic() {
         CommandScheduler.getInstance().run();
         if (xlockTimer.hasElapsed(134.75)) {
+            Logger.getInstance().end();
             //new RunCommand(()->Swerve.getInstance().xlock(), Swerve.getInstance()).schedule();
         }
     }

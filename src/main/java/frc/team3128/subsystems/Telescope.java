@@ -19,6 +19,7 @@ import frc.team3128.common.hardware.motorcontroller.NAR_CANSparkMax;
 import frc.team3128.common.utility.NAR_Shuffleboard;
 
 import static frc.team3128.Constants.TelescopeConstants;
+import frc.team3128.subsystems.pivot.Pivot;
 
 /**
  * Telescope for windmill arm class

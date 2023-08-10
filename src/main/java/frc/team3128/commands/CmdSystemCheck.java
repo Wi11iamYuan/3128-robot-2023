@@ -14,8 +14,8 @@ import frc.team3128.common.swerveNeo.SwerveModule;
 import frc.team3128.common.utility.NAR_Shuffleboard;
 import frc.team3128.subsystems.Intake;
 import frc.team3128.subsystems.Manipulator;
-import frc.team3128.subsystems.Pivot;
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.pivot.Pivot;
+import frc.team3128.subsystems.drive.Swerve;
 import frc.team3128.subsystems.Telescope;
 import frc.team3128.subsystems.Intake.IntakeState;
 

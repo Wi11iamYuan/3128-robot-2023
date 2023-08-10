@@ -5,7 +5,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.team3128.subsystems.Swerve;
+import frc.team3128.subsystems.drive.Swerve;
 
 public class CmdDriveUp extends CommandBase{
     private double power;

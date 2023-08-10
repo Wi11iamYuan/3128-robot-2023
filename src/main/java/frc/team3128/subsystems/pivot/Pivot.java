@@ -1,4 +1,4 @@
-package frc.team3128.subsystems;
+package frc.team3128.subsystems.pivot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -9,12 +9,15 @@ import static frc.team3128.Constants.PivotConstants.*;
 
 import java.util.function.DoubleSupplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import frc.team3128.RobotContainer;
 import frc.team3128.Constants.PivotConstants;
 import frc.team3128.Constants.TelescopeConstants;
 import frc.team3128.Constants.ArmConstants.ArmPosition;
 import frc.team3128.common.hardware.motorcontroller.NAR_CANSparkMax;
 import frc.team3128.common.utility.NAR_Shuffleboard;
+import frc.team3128.subsystems.Telescope;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -26,9 +29,13 @@ public class Pivot extends PIDSubsystem {
     private NAR_CANSparkMax m_rotateMotor;
     public double offset;
 
+    private PivotIO pivotIO;
+    private PivotIOInputsAutoLogged pivotIOInputs = new PivotIOInputsAutoLogged();
+
     public Pivot() {
         super(new PIDController(kP, kI, kD));
 
+        pivotIO = new PivotIO();
         // getController().enableContinuousInput(-180, 180);
 
         configMotors();
@@ -42,6 +49,12 @@ public class Pivot extends PIDSubsystem {
             instance = new Pivot();
         }
         return instance;
+    }
+
+    @Override
+    public void periodic(){
+        pivotIO.updateInputs(pivotIOInputs);
+        Logger.getInstance().processInputs("Pivot", pivotIOInputs);
     }
 
     private void configMotors() {
@@ -66,13 +79,9 @@ public class Pivot extends PIDSubsystem {
         setPower(0);
     }
 
-    public double getAngle(){
-        return m_rotateMotor.getSelectedSensorPosition() * 360 / GEAR_RATIO;
-    }
-
     @Override
-    protected double getMeasurement() { // returns degrees
-        return getAngle();
+    public double getMeasurement() { // returns degrees
+        return m_rotateMotor.getSelectedSensorPosition() * 360 / GEAR_RATIO;
     }
 
     public void startPID(double anglePos) {
@@ -99,6 +108,8 @@ public class Pivot extends PIDSubsystem {
         //if (Math.abs(setpoint - getAngle()) > kF.getAsDouble()) voltageOutput = Math.copySign(12, voltageOutput);
         
         m_rotateMotor.set(MathUtil.clamp(voltageOutput / 12.0, -1, 1));
+        Logger.getInstance().recordOutput("Pivot-output", MathUtil.clamp(voltageOutput / 12.0, -1, 1));
+        Logger.getInstance().recordOutput("Pivot-setpoint", setpoint);
     }
 
     public boolean atSetpoint() {
@@ -106,7 +117,7 @@ public class Pivot extends PIDSubsystem {
     }
 
     public void initShuffleboard() {
-        NAR_Shuffleboard.addData("pivot","encoder angle", ()->getAngle(),0,3);
+        // NAR_Shuffleboard.addData("pivot","encoder angle", ()->getAngle(),0,3);
         NAR_Shuffleboard.addData("pivot","pivot angle", ()->getMeasurement(),0,0);
         NAR_Shuffleboard.addData("pivot", "pivot setpoint", ()->getSetpoint(), 0, 1);
         kG = NAR_Shuffleboard.debug("pivot","kG", PivotConstants.kG, 0,4);
