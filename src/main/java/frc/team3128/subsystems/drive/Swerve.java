@@ -178,6 +178,7 @@ public class Swerve extends SubsystemBase {
         //     resetOdometry(new Pose2d(estimatedPose.getTranslation(), getGyroRotation2d()));
         // }
         estimatedPose = odometry.getEstimatedPosition();
+        Logger.getInstance().recordOutput("pose2D", getPose());
         logPose();
         for (SwerveModule module : modules) {
             SmartDashboard.putNumber("module " + module.moduleNumber, module.getCanCoder().getDegrees());

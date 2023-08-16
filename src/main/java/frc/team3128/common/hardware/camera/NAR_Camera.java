@@ -1,5 +1,6 @@
 package frc.team3128.common.hardware.camera;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.littletonrobotics.junction.Logger;
 
 public class NAR_Camera extends PhotonCamera {
 
@@ -108,7 +111,7 @@ public class NAR_Camera extends PhotonCamera {
             if (!camera.updatePose) return;
             ArrayList<Pose2d> poses = new ArrayList<Pose2d>();
             if (multipleTargets) {
-                for (int i = 0; i < targets.size(); i ++) {
+                for (int i = 0; i < targets.size(); i++) {
                     if (targetAmbiguity(targets.get(i)) < 0.3 && !getPos(targets.get(i)).equals(new Pose2d()))
                         poses.add(getPos(targets.get(i)));
                 }
@@ -119,6 +122,18 @@ public class NAR_Camera extends PhotonCamera {
                     return;
                 updatePose.accept(poses.get(i),result.getTimestampSeconds());
             }
+            final Transform2d target = getTarget();
+            final Translation2d targetTranslation = target.getTranslation();
+            final Rotation2d targetRotation = target.getRotation();
+            Logger.getInstance().recordOutput(MessageFormat.format("Vision/{0}/Target", camera.hostname), new Pose2d(targetTranslation, targetRotation));
+
+            final Transform2d test = getTest();
+            final Translation2d testTranslation = test.getTranslation();
+            final Rotation2d testRotation = test.getRotation();
+            Logger.getInstance().recordOutput(MessageFormat.format("Vision/{0}/Test", camera.hostname), new Pose2d(testTranslation, testRotation));
+            
+            Logger.getInstance().recordOutput(MessageFormat.format("Vision/{0}/Dist", camera.hostname), getDistance());
+            Logger.getInstance().recordOutput(MessageFormat.format("Vision/{0}/Pos", camera.hostname), getPos());
             return;
         }
         targets = null;

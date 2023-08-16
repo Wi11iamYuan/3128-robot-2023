@@ -6,6 +6,8 @@ package frc.team3128;
 
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 // import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -23,7 +25,7 @@ import frc.team3128.subsystems.Telescope;
 public class Robot extends LoggedRobot {
     public static Robot instance;
 
-    public static RobotContainer m_robotContainer = new RobotContainer();
+    public static RobotContainer m_robotContainer;
     private Command m_autonomousCommand;
     public static AutoPrograms autoPrograms = new AutoPrograms();
     public Timer timer;
@@ -44,9 +46,12 @@ public class Robot extends LoggedRobot {
         logger.recordMetadata("ProjectName", "TEST1");
         logger.recordMetadata("BuildDate", String.valueOf(logger.getRealTimestamp()));
 
-        logger.addDataReceiver(null);
+        logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
+        logger.addDataReceiver(new NT4Publisher());
 
         logger.start();
+
+        m_robotContainer = new RobotContainer();
         //LiveWindow.disableAllTelemetry();
         // Pivot.getInstance().offset = Pivot.getInstance().getAngle();
     }
@@ -87,7 +92,7 @@ public class Robot extends LoggedRobot {
     public void teleopPeriodic() {
         CommandScheduler.getInstance().run();
         if (xlockTimer.hasElapsed(134.75)) {
-            Logger.getInstance().end();
+            // Logger.getInstance().end();
             //new RunCommand(()->Swerve.getInstance().xlock(), Swerve.getInstance()).schedule();
         }
     }

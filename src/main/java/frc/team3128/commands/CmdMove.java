@@ -16,8 +16,8 @@ import static frc.team3128.Constants.FieldConstants.*;
 import frc.team3128.Constants.SwerveConstants;
 import frc.team3128.Constants.VisionConstants;
 import frc.team3128.common.utility.NAR_Shuffleboard;
-import frc.team3128.subsystems.drive.Swerve;
 import frc.team3128.subsystems.Vision;
+import frc.team3128.subsystems.drive.Swerve;
 
 public class CmdMove extends CommandBase {
     

@@ -55,6 +55,7 @@ public class Pivot extends PIDSubsystem {
     public void periodic(){
         pivotIO.updateInputs(pivotIOInputs);
         Logger.getInstance().processInputs("Pivot", pivotIOInputs);
+        super.periodic();
     }
 
     private void configMotors() {
