@@ -84,6 +84,7 @@ public class NAR_CANSparkMax extends CANSparkMax {
 		if (Robot.isSimulation()) {
 			simVoltage = 0;
 		}
+		setDefaultStatusFrames();
 	}
 
 	/**
