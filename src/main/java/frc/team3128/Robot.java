@@ -9,8 +9,6 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import common.core.NAR_Robot;
-import edu.wpi.first.wpilibj.DriverStation;
 // import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,14 +20,14 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.team3128.autonomous.AutoPrograms;
 import frc.team3128.commands.CmdSimPivot;
-import frc.team3128.subsystems.pivot.Pivot;
-import frc.team3128.subsystems.drive.Swerve;
+import frc.team3128.subsystems.Pivot;
+import frc.team3128.subsystems.Swerve;
 import frc.team3128.subsystems.Telescope;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation.
  */
-public class Robot extends NAR_Robot {
+public class Robot extends LoggedRobot {
     public static Robot instance;
     private Pivot m_pivot;
 
@@ -54,7 +52,7 @@ public class Robot extends NAR_Robot {
         logger.recordMetadata("ProjectName", "TEST1");
         logger.recordMetadata("BuildDate", String.valueOf(logger.getRealTimestamp()));
 
-        logger.addDataReceiver(new WPILOGWriter("/media/sda1/" + DriverStation.getMatchType() + DriverStation.getMatchNumber() + ".wpilog"));
+        logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
         logger.addDataReceiver(new NT4Publisher());
 
         logger.start();

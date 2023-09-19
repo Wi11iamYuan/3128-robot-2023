@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.team3128.Constants.ArmConstants.ArmPosition;
 import frc.team3128.subsystems.Manipulator;
-import frc.team3128.subsystems.pivot.Pivot;
+import frc.team3128.subsystems.Pivot;
 import frc.team3128.subsystems.Telescope;
 
 public class CmdSimPivot extends CommandBase {
